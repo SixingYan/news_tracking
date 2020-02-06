@@ -28,7 +28,7 @@ def test():
     curl -H "Content-Type:application/json" -X POST --data '{}' http://127.0.0.1:8588/
     '''
     import requests
-    url = "127.0.0.1:5001/api/date"
+    url = "127.0.0.1:5011/api/date"
     j = {
         "data": {
             "date": "20200205"
