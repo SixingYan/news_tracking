@@ -24,21 +24,6 @@ class DateHandler(tornado.web.RequestHandler):
         print(response)
         self.write(json.dumps(response))
 
-def test():
-    '''
-    curl -H "Content-Type:application/json" -X POST --data '{}' http://127.0.0.1:8588/
-    '''
-    import requests
-    url = "127.0.0.1:5011/api/date"
-    j = {
-        "data": {
-            "date": "20200205"
-        }
-    }
-    rs = requests.post(
-        url, headers={'Content-Type': 'application/json'}, json=j)
-    print(rs)
-
 
 if __name__ == '__main__':
-    test()
+    pass

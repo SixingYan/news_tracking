@@ -113,10 +113,11 @@ class DateService(object):
 
     def do(self, date: str)->int:
         """"""
-        date = '2020-02-05'
+        print(date)
         y = date[:4]
         m = date[4:6]
         d = date[6:8]
+        print('{}-{}-{}'.format(y,m,d))
         domains = ['people', 'xinhuanet', 'qq', 'sdnews', 'cctv', 'southcn']
         count = 0
         for d in domains:
