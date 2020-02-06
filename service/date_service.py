@@ -1,4 +1,5 @@
 #! coding: utf-8
+import re
 domain_mapping = {
     'workercn': {
         'es_index': 'workercn',

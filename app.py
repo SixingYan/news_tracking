@@ -1,6 +1,5 @@
 #! coding: utf-8
 from router import urlpatterns
-import sys
 import tornado.httpserver
 import tornado.ioloop
 import tornado.options
