@@ -1,37 +1,28 @@
 #! coding: utf-8
 import re
 domain_mapping = {
-    'workercn': {
-        'es_index': 'workercn',
-        'proxy_rate': 0.3,
-        'domains': ['workercn.cn']
-    },
     'jxcn': {
         'es_index': 'jxcn',
-        'proxy_rate': 0.3,
         'domains': ['jxcn.cn']
     },
     'jschina': {
         'es_index': 'jschina',
-        'proxy_rate': 0.3,
         'domains': ['jschina.com.cn']
     },
     'qhnews': {
         'es_index': 'qhnews',
-        'proxy_rate': 0.3,
         'domains': ['qhnews.cn']
     },
     'people': {
         'es_index': 'people',
-        'proxy_rate': 0.7,
         'domains': ['people.com', 'people.cn', 'people.com.cn'],
         'pattern': '{}/{}{}'
 
     },
     'xinhuanet': {
         'es_index': 'xinhuanet',
-        'proxy_rate': 0.7,
-        'domains': ['xinhuanet.com']
+        'domains': ['xinhuanet.com'],
+        'pattern': '{}-{}/{}'
     },
     'cnwest': {
         'es_index': 'cnwest',
@@ -64,9 +55,8 @@ domain_mapping = {
         'domains': ['caijing.com.cn']
     },
     'southcn': {
-        'es_index': 'southcn',
-        'proxy_rate': 0.5,
-        'domains': ['southcn.com']
+        'domains': ['southcn.com'],
+        'pattern': '{}-{}/{}'
     },
     'zqrb': {
         'es_index': 'zqrb',
@@ -90,8 +80,8 @@ domain_mapping = {
     },
     'sdnews': {
         'es_index': 'sdnews',
-        'proxy_rate': 0.4,
-        'domains': ['sdnews.com.cn']
+        'domains': ['sdnews.com.cn'],
+        'pattern': '{}{}{}/'
     },
     'hebnews': {
         'es_index': 'hebnews',
@@ -105,18 +95,13 @@ domain_mapping = {
     },
     'qq': {
         'es_index': 'qq',
-        'proxy_rate': 0.01,
-        'domains': ['qq.com']
+        'domains': ['qq.com'],
+        'pattern': '{}{}{}/'
     },
-    'qq_sport': {
-        'es_index': 'qq_sport',
-        'proxy_rate': 0.01,
-        'domains': ['qq.com']
-    },
-    '163': {
-        'es_index': '163',
-        'proxy_rate': 0.01,
-        'domains': ['163.com']
+    'cctv':{
+        'es_index': 'cctv',
+        'domains': ['cctv.com'],
+        'pattern': '{}/{}/{}'
     }
 }
 
@@ -129,16 +114,17 @@ class DateService(object):
     def do(self, date: str)->int:
         """"""
         date = '2020-02-05'
-        y = '2020'
-        m = '02'
-        d = '05'
-        domains = ['people']
+        y = date[:4]
+        m = date[4:6]
+        d = date[6:8]
+        domains = ['people', 'xinhuanet', 'qq', 'sdnews', 'cctv', 'southcn']
         count = 0
         for d in domains:
-            c = self.mg['news_corpus'][date].count({
+            c = self.mg['news_corpus']['{}-{}-{}'.format(y,m,d)].count({
                 'url':     {'$regex': re.compile(".*{}.*".format(domain_mapping[d]['pattern'].format(y, m, d)))},
-                'domain':  {'$in': domain_mapping[d]['domain']}
+                'domain':  {'$in': domain_mapping[d]['domains']}
             })
+            print('{} {}'.format(d, c))
             count += c
 
         return count
