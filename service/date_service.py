@@ -143,4 +143,4 @@ class DateService(object):
         return count
 
 if __name__ == '__main__':
-    test()
+    pass
